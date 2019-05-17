@@ -1,4 +1,4 @@
-# ADS-B_Project_CD-10
+# Producing representative statistics of the Dutch airspace and airports using ADS-B data
 
 This project by group CD-10 of the Delft University of Technology (TU Delft), with guidance from Dr.ir. Joost Ellerbroek, aims to use
 openly available ADS-B data to create representative usage statistics of the Dutch airspace and airports. These statistics are then meant
