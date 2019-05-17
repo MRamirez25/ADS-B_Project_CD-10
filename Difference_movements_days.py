@@ -25,6 +25,8 @@ def RunwayCount(file):
                          dtype={'lon_lower': float, 'lon_upper': float, 'lat_lower': float, 'lat_upper': float})
     Runway = Runway.drop(['X-B','Y-B','X-E','Y-E'], axis = 1)
     
+    ### Checking if Landing or Taking off
+
     ADSB = ADSB[(ADSB['alt']<5000) & (ADSB['alt']>0)]
     ADSB = ADSB[ADSB.year == 2018]
     
@@ -55,6 +57,8 @@ def RunwayCount(file):
     ADSB = ADSB.drop_duplicates(['fid'], keep='last')
     
     df = ADSB.drop(['lat','lon','alt','trk','roc','regid','mdl','operator','hour','year'], axis = 1)
+    
+    ### Count number of times a certain runway is used in a day
     Count = df['runway'].value_counts()
     return Count
 
@@ -68,17 +72,23 @@ for i in range(1,32):
     print(i)
     
     Count = RunwayCount(file)
+
+    ### appending amount of times in a single day and do this for all days
     Counttot = pd.DataFrame.append(Counttot,Count)
-    
+
+### calculate mean and fix how it looks    
 Countmean = Counttot.mean()
 Countmean = Countmean.to_frame()
 Countmean.columns = ['Average number of flights']
 Counttot = Counttot.set_index(np.arange(1,Counttot.shape[0]+1))
 
+
+### Calculate Variance and fix how it looks
 Countvar = Counttot.var()
 Countvar = Countvar.to_frame()
 Countvar.columns = ['Variance of flights']
 
+### Saving the files
 Countvar.to_csv('Variance_Count_Runway_January.csv')
 Countmean.to_csv('Mean_Count_Runway_January.csv')
 Counttot.to_csv('Total_RunwayCount_per_day_January.csv')
