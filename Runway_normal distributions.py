@@ -19,11 +19,11 @@ def HourCount(file):
                          dtype={'lon_lower': float, 'lon_upper': float, 'lat_lower': float, 'lat_upper': float})
     Runway = Runway.drop(['X-B','Y-B','X-E','Y-E'], axis = 1)
     
+    ### Checking if Landing or Taking off
+
     ADSB = ADSB[(ADSB['alt']<5000) & (ADSB['alt']>0)]
     ADSB = ADSB[ADSB.year == 2018]
     
-    ### Checking if Landing or Taking off
-
 
     for i in range(Runway.shape[0]):
         if i == 6 or i ==7 or i == 9:
@@ -208,7 +208,7 @@ for i in range(1,days + 1):
         file = str('ADSB_combined/ADSB_combined_2018010'+ str(i) + '.csv')
     else:
         file = str('ADSB_combined/ADSB_combined_201801'+ str(i) + '.csv')
-    
+    print(i)
     ### Preparing dataframes for variance calculation
 
     Counttot,CountLT,Count_runway_LT_tot = HourCount(file) 
@@ -234,11 +234,11 @@ Count_runway_LT_var = 1/(days-1)*Count_runway_LT_var
 
 
 ### Saving the mean
-Counttot_mean.to_csv('Counttot_mean.csv')
-CountLT_mean.to_csv('CountLT_mean.csv')
-Count_runway_LT_mean.to_csv('Count_runway_LT_mean.csv')
+Counttot_mean.to_csv('New/Counttot_mean.csv')
+CountLT_mean.to_csv('New/CountLT_mean.csv')
+Count_runway_LT_mean.to_csv('New/Count_runway_LT_mean.csv')
 
 ### Saving the Variance
-Counttot_var.to_csv('Counttot_var.csv')
-CountLT_var.to_csv('CountLT_var.csv')
-Count_runway_LT_var.to_csv('Count_runway_LT_var.csv')
+Counttot_var.to_csv('New/Counttot_var.csv')
+CountLT_var.to_csv('New/CountLT_var.csv')
+Count_runway_LT_var.to_csv('New/Count_runway_LT_var.csv')
